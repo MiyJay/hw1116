@@ -1,10 +1,12 @@
 // ui/CalculationListPresenter.java
 package ru.gr05507.ui;
 
+import ru.gr05507.application.CalculationObserver;
 import ru.gr05507.application.CalculationService;
 import ru.gr05507.domain.Calculation;
 
-public class CalculationListPresenter {
+// Наблюдатель (ConcreteObserver): сам обновляет список, когда расчёты изменились
+public class CalculationListPresenter implements CalculationObserver {
     private final CalculatorView view;
     private final CalculationService service;
 
@@ -14,6 +16,12 @@ public class CalculationListPresenter {
     }
 
     public void start() {
+        service.subscribe(this);   // подписка на изменения списка расчётов
+        refresh();
+    }
+
+    @Override
+    public void onCalculationsChanged() {
         refresh();
     }
 
@@ -27,7 +35,6 @@ public class CalculationListPresenter {
             view.showError("Выберите расчёт в списке");
             return;
         }
-        service.delete(calculation);
-        refresh();
+        service.delete(calculation);   // список обновится через наблюдателя
     }
 }

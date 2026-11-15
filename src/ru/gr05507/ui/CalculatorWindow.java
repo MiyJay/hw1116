@@ -72,9 +72,10 @@ public class CalculatorWindow extends JFrame implements CalculatorView {
             }
         });
 
-        calculateButton.addActionListener(e -> {
-            if (formPresenter.calculateClicked()) listPresenter.refresh();
-        });
+        // Обновление списка происходит через наблюдателя: после расчёта
+        // CalculationService уведомляет подписчиков, и CalculationListPresenter
+        // сам обновляет список.
+        calculateButton.addActionListener(e -> formPresenter.calculateClicked());
         deleteButton.addActionListener(e -> listPresenter.deleteSelected());
     }
 
