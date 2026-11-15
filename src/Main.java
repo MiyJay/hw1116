@@ -2,7 +2,7 @@ import ru.gr05507.application.CalculationService;
 import ru.gr05507.infrastructure.Exp4jFormulaParser;
 import ru.gr05507.infrastructure.InMemoryCalculationRepository;
 import ru.gr05507.ui.CalculatorWindow;
-import ru.gr05507.ui.CommandHistory;
+import ru.gr05507.application.CommandHistory;
 
 void main() {
     CalculationService service = new CalculationService(

@@ -2,6 +2,7 @@
 package ru.gr05507.ui;
 
 import ru.gr05507.application.CalculationService;
+import ru.gr05507.application.CommandHistory;
 import ru.gr05507.domain.Calculation;
 import ru.gr05507.domain.MethodRealisation;
 import ru.gr05507.domain.MethodsRealisation;

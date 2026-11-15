@@ -1,6 +1,5 @@
-package ru.gr05507.ui;
+package ru.gr05507.application;
 
-import ru.gr05507.application.CalculationService;
 import ru.gr05507.domain.Calculation;
 import ru.gr05507.domain.MethodRealisation;
 
