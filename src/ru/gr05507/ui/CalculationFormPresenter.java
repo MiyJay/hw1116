@@ -6,10 +6,13 @@ import ru.gr05507.application.CalculationService;
 public class CalculationFormPresenter {
     private final CalculatorView view;
     private final CalculationService service;
+    private final CommandHistory history;
 
-    public CalculationFormPresenter(CalculatorView view, CalculationService service) {
+    public CalculationFormPresenter(CalculatorView view, CalculationService service,
+                                    CommandHistory history) {
         this.view = view;
         this.service = service;
+        this.history = history;
     }
 
     // Возвращает true, если расчёт выполнен и сохранён
@@ -21,12 +24,21 @@ public class CalculationFormPresenter {
             double lower = parseNumber(view.getLowerText(), "Нижний предел");
             double upper = parseNumber(view.getUpperText(), "Верхний предел");
             int intervals = parseInteger(view.getIntervalsText(), "Число отрезков");
-            service.calculate(formula, lower, upper, intervals, view.getMethod());
+            // Расчёт выполняется командой; история запоминает её для отмены
+            history.execute(new CalculationCommand(service, formula, lower, upper,
+                    intervals, view.getMethod()));
             view.clearForm();
             return true;
         } catch (IllegalArgumentException ex) {
             view.showError(ex.getMessage());
             return false;
+        }
+    }
+
+    // Отменяет последний расчёт; список обновит Observer
+    public void undoLast() {
+        if (!history.undo()) {
+            view.showError("Отменять нечего!");
         }
     }
 
